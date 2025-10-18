@@ -1,0 +1,55 @@
+---
+title: "Untitled"
+output: html_document
+date: "2025-10-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# . Remove non-numeric columns (like "Label") before PCA
+```{r Metabolite}
+
+numeric_data <- metabolite_clean[, sapply(metabolite_clean, is.numeric)]
+```
+
+# Apply PCA (scale. = TRUE standardizes features)
+```{r Metabolite}
+
+metabolite_pca <- prcomp(numeric_data, scale. = TRUE)
+```
+
+#  Create a PCA results dataframe
+```{r Metabolite}
+pca_df <- as.data.frame(metabolite_pca$x)
+```
+
+# Add the Label column for coloring
+```{r Metabolite}
+
+pca_df$Label <- metabolite_clean$Label
+
+# 6. Plot the first two principal components
+ggplot(pca_df, aes(x = PC1, y = PC2, color = Label)) +
+  geom_point(size = 3) +
+  labs(title = "PCA of Metabolite Data",
+       x = "Principal Component 1",
+       y = "Principal Component 2",
+       color = "Label") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+```
+
+
+
+
+## Including Plotsm
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
