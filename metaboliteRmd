@@ -1,0 +1,94 @@
+---
+title: HW2-Q5
+
+output: html_document
+date: "2025-10-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+PCA Implementation on metabolite.csv
+```{r cars}
+
+
+
+```
+Load dataset
+
+```{r metabolite}
+metabolite <- read.csv("C:/Users/HOME/Downloads/metabolite.csv")
+```
+
+# Drop columns with >75% missing values
+
+```{r metabolite}
+
+missing_percent <- colSums(is.na(metabolite)) / nrow(metabolite) * 100
+metabolite_clean <- metabolite[, missing_percent <= 75]
+```
+# Replace remaining NAs with column medians
+
+```{metabolite}
+
+for (colname in names(metabolite_clean)) {
+  if (is.numeric(metabolite_clean[[colname]])) {
+    median_value <- median(metabolite_clean[[colname]], na.rm = TRUE)
+    metabolite_clean[[colname]][is.na(metabolite_clean[[colname]])] <- median_value
+  }
+}
+```
+
+
+
+# Apply PCA (excluding Label column)
+```{r metabolite}
+metabolite_pca <- prcomp(metabolite_clean[, !names(metabolite_clean) %in% c("Label")],
+                         scale. = TRUE)
+```
+
+
+```{r cars}
+# Create PCA data frame
+pca_df <- as.data.frame(metabolite_pca$x)
+pca_df$Label <- metabolite_clean$Label
+```
+
+
+
+# Scatter plot of first two principal components
+```{r cars}
+library(ggplot2)
+ggplot(pca_df, aes(x = PC1, y = PC2, color = Label)) +
+  geom_point(size = 3) +
+  labs(title = "PCA of Metabolite Data",
+       x = "Principal Component 1",
+       y = "Principal Component 2",
+       color = "Label") +
+  theme_minimal()
+
+```
+
+
+```{r}
+# Create PCA data frame from your PCA results
+pca_df <- as.data.frame(metabolite_pca$x)
+```
+
+
+```{r}
+# Add the Label column from the cleaned data
+pca_df$Label <- metabolite_clean$Label
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
