@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+
+# Perform PCA on mtcars (using only numeric columns)
+mtcars_pca <- prcomp(mtcars, scale. = TRUE)
+
+# Convert PCA scores to a data frame
+mtcars_pca_df <- as.data.frame(mtcars_pca$x)
+
+# Add a car name column for reference
+mtcars_pca_df$car <- rownames(mtcars)
+
+# Plot the first two principal components
+library(ggplot2)
+
+mtcars_after_pca <- ggplot(mtcars_pca_df, aes(x = PC1, y = PC2)) +
+  geom_point(color = "blue", size = 3) +
+  geom_text(aes(label = car), vjust = 1.5, size = 3) +
+  xlab("PCA 1") +
+  ylab("PCA 2") +
+  theme_minimal()
+
+print(mtcars_after_pca)
+plot(cars)
+```
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
