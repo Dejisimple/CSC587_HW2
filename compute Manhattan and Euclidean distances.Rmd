@@ -1,0 +1,49 @@
+
+---
+title: "HW2 - Question 2"
+output: html_notebook
+---
+
+# Compute Manhattan and Euclidean distances
+```{r}
+compute_distances <- function(vec1, vec2) {
+  if (length(vec1) != length(vec2)) {
+    stop("Vectors must have the same length")
+  }
+  
+  manhattan <- sum(abs(vec1 - vec2))
+  euclidean <- sqrt(sum((vec1 - vec2)^2))
+  
+  return(list(
+    Manhattan_Distance = manhattan,
+    Euclidean_Distance = euclidean
+  ))
+}
+
+```
+
+
+
+```{r}
+compute_distances <- function(vec1, vec2) {
+  if (length(vec1) != length(vec2)) {
+    stop("Vectors must have the same length")
+  }
+  
+  manhattan <- sum(abs(vec1 - vec2))
+  euclidean <- sqrt(sum((vec1 - vec2)^2))
+  
+  return(list(
+    Manhattan_Distance = manhattan,
+    Euclidean_Distance = euclidean
+  ))
+}
+
+# Test the function on example vectors
+A <- c(2, 5, 8, 10)
+B <- c(4, 3, 12, 8)
+
+compute_distances(A, B)
+
+```
+
